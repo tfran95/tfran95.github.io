@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="https://kit.fontawesome.com/53f3fcb6f5.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Timesheet Aide</title>
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 id="title">CCDS Daily Timesheet Aide<i class="far fa-clock"></i>
+            </h1>
+            <h4>help</h4>
+            <p id="description">
+
+            </p>
+        </header>
+        <form id="timesheet-form" onsubmit="return false">
+
+            <div class="form-group">
+                <p>Shift start day</p>
+                <select id="dropdown" class="form-control" name="day" required>
+                    <option value="" disabled selected>Day</option>
+                    <option value="sat">Saturday</option>
+                    <option value="sun">Sunday</option>
+                    <option value="mon">Monday</option>
+                    <option value="tue">Tuesday</option>
+                    <option value="wed">Wednesday</option>
+                    <option value="thu">Thursday</option>
+                    <option value="fri">Friday</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <p>Current hours <span class="optional">(hours you've already submitted)</span></p>
+                <label><input name="prev-hr" id="ok" type="number" class="prev-hr" min="0" max="144" placeholder="Hours" step=".01"
+                    required /></label>
+
+                <div class="form-group" id="lunch">
+                    <p>When did you take lunch?</p>
+                    <label><input id="lunch-radio" type="radio" name="lunch-toggler" value="0" required />  <span class="optional">06.00 - 21.00</span></label>
+                    <label><input id="rdb2" type="radio" name="lunch-toggler" value="1" /> <span class="optional">21.00 - 06.00 <i
+                        class="far fa-moon"></i></span> </label>
+
+                </div>
+
+                <div class="form-group">
+                    <div class="form-group" id="lunch">
+                        <p>Night or Day Shift?<span class="optional">(worked through midnight or not)</span></p>
+                        <label><input id="toggler-day" type="radio" name="shift-toggler" value="day" required/> <span class="optional">Day</span></label>
+                        <label><input id="toggler-night" type="radio" name="shift-toggler" value="night" /><span class="optional">Night <i
+                                class="far fa-moon"></i></span></label>
+
+                    </div>
+                    <p>Enter your start & end times <span class="optional">(lunch is subtracted automatically)</span>
+                    </p>
+                    <div class="time-group">
+                        <p id="time-label-start">Start:</p>
+                        <p id="time-help-text"><span class="optional">(Ex: If you got off at 5am, then went back at 5pm, enter 05 00 then 17 00)</span></p>
+                        <label>
+                            <input name="startTimeHr" type="number" class="time" min="0" max="23" placeholder="Hour"
+                                required />:<input name="startTimeMin" type="number" class="time" min="0" max="59"
+                                placeholder="Min" required /></label>
+                        <p id="time-label-end">End:</p>
+                        <label>
+
+                            <input name="endTimeHr" type="number" class="time" min="0" max="23" placeholder="Hour"
+                                required />:<input name="endTimeMin" type="number" class="time" min="0" max="59"
+                                placeholder="Min" required /></label>
+
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <div class="alert" id="alert">
+                        <span class="closebtn" id="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                        <p id="alert-text"></p>
+                      </div>
+                    <button type="submit" id="submit">SUBMIT
+                    </button>
+                </div>
+        </form>
+
+    </div>
+
+    <div class="divTable" style="width: fit-content" >
+        <div class="divTableBody">
+        <div class="divTableRow">
+        <div class="divTableCell">&nbsp;Time Reporting Code</div>
+        <div class="divTableCell" id="hour-box-title">&nbsp;Day</div>
+        <div class="divTableCell">&nbsp;PM</div>
+        </div>
+        <div class="divTableRow">
+        <div class="divTableCell" id="report-code-col"><select name="TRC$0" id="TRC$0" tabindex="344" size="1" class="PSTEXT"
+            style="width:300px; "
+            >
+            <option value=""></option>
+            <option value="OVTHT" selected="selected">Overtime - Time and Half - OVTHT</option>
+        </select></div> 
+        <div class="divTableCell" id="hour-box"><input type="text" class="day-box" id="overtime-hour" name="fname"></div>
+        <div class="divTableCell"><div id="win0divBCOPM$3"><input type="text"  tabindex="398"
+            value="" class="PM-BOX" maxlength="10" disabled></div></div>
+        </div>
+        <div class="divTableRow">
+        <div class="divTableCell" id="report-code-col"><select name="TRC$0" id="TRC$0" tabindex="344" size="1" class="PSTEXT"
+            style="width:300px; "
+            >
+            <option value=""></option>
+            <option value="REGHR" selected="selected">Regular - REGHR</option>
+        </select></div>
+        <div class="divTableCell" id="hour-box"><input type="text" class="day-box" id="reg-hr" name="fname"></div>
+        <div class="divTableCell"><div id="win0divBCOPM$3"><input type="text"  tabindex="398"
+            value="" class="PM-BOX" maxlength="10" disabled></div></div>
+        </div>
+        <div class="divTableRow">
+        <div class="divTableCell" id="report-code-col"><select name="TRC$0" id="TRC$0" tabindex="344" size="1" class="PSTEXT"
+            style="width:300px; "
+            >
+            <option value=""></option>
+            <option value="REGHR" selected="selected">Regular - REGHR</option>
+        </select></div>
+        <div class="divTableCell" id="hour-box"><input type="text" class="day-box" id="reg-hr-pm" name="fname"></div>
+        <div class="divTableCell"><div id="win0divBCOPM$3"><input type="text"  tabindex="398"
+            value="PM" class="PM-BOX" maxlength="10"></div></div>
+        </div>
+        <div class="divTableRow">
+        <div class="divTableCell" id="report-code-col"><select name="TRC$0" id="TRC$0" tabindex="344" size="1" class="PSTEXT"
+            style="width:300px; "
+            >
+            <option value="SFTOT" selected="selected">Shift Differential on Overtime - SFTOT</option>
+        </select></div>
+        <div class="divTableCell" id="hour-box"><input type="text" class="day-box" id="shift-dif-ot" name="fname"></div>
+        <div class="divTableCell"><div id="win0divBCOPM$3"><input type="text"  tabindex="398"
+            value="" class="PM-BOX" maxlength="10" disabled></div></div>
+        </div>
+        <div class="divTableRow">
+        <div class="divTableCell" id="report-code-col"><select name="TRC$0" id="TRC$0" tabindex="344" size="1" class="PSTEXT"
+            style="width:300px; "
+            >
+            <option value="SHF10" selected="selected">Shift Differential 10% - SHF10</option>
+        </select></div>
+        <div class="divTableCell" id="hour-box"><input type="text" class="day-box" id="shift-dif-reg" name="fname"></div>
+        <div class="divTableCell"><div id="win0divBCOPM$3"><input type="text"  tabindex="398"
+            value="" disabled class="PM-BOX" maxlength="10"></div></div>
+        </div>
+        <div class="divTableRow">
+        <div class="divTableCell" id="report-code-col"><select name="TRC$0" id="TRC$0" tabindex="344" size="1" class="PSTEXT"
+            style="width:300px; "
+            >
+            <option value="SHF10" selected="selected">Shift Differential 10% - SHF10</option>
+        </select></div>
+        <div class="divTableCell" id="hour-box"><input type="text" class="day-box" id="shift-dif-reg-pm" name="fname"></div>
+        <div class="divTableCell"><div id="win0divBCOPM$3"><input type="text"  tabindex="398"
+            value="PM" class="PM-BOX" maxlength="10"></div></div>
+        </div>
+        </div>
+        </div>
+        <!-- DivTable.com -->
+
+    <script src="app.js"></script>
+</body>
+
+</html>
