@@ -1,35 +1,19 @@
-//24hr time format
-//total hours > 40 = overtime
-//hours in range 2100-0600 (21-6), or >21, <6 are shift differential
-//friday specific case: hours on friday after 1200 are PM
-//start time h.m
-//end time h.m
-//0.5 lunch
-var prevHr;
-var startTime;
-var endTime;
-var regHr;
-var overTimeHr;
-var totalHours;
-var morningHour;
-var eveningHour;
-var shiftDifHr;
-var shiftDifHrOT;
-var lunch;
-var day = 1; //idk what i was doing with this, maybe friday functionality idk
+var startTime = 45; //input
+var endTime = 100; //input
+var mornEnd = 52; //input
+var evenStart = 162; //input
+const day = createDay();
+var sd = 0;
+var sdot = 0;
+var reg = 0;
+var ot = 0;
+var prevHr; //input 
+var count = 0;
+var countOt = 0;
 
-/*
-data[0].value = "sun"
-data[1].value = lunchTime as int (0 = day, 1 = night)
-data[2].value = shift-toggler as 'day' or 'night' - used to choose calc function
-data[3].value = startTimeHr as int
-data[4].value = startTimeMin as int
-data[5].value = endTimeHr as int
-data[6].value = endTimeMin as int 
+//40 - totalhours = possible regular hours 
+var regPossible = 150;
 
-*/
-
-//create dataArray of form data {name:value}
 $('#timesheet-form').submit(function (event) {
     var dataArray = $(this).serializeArray(),
         dataObj = {};
@@ -49,179 +33,95 @@ $('#timesheet-form').submit(function (event) {
     })
     //prevent page refresh on submit
     event.preventDefault();
-    //(data[2].value === "night") ? nightShift() : dayShift();
-    prevHr = data[1].value;
-    lunch = data[2].value;
-    calculateHours();
-    subLunch();
-    console.log(totalHours);
-    console.log(shiftDifHr);
-    console.log(overTimeHr);
-    document.getElementById("overtime-hour").value = overTimeHr;
+    (data[2].value === "night") ? calculateDay(createDayShift) : calculateDay(createNightShift);
+    return data;
+});
+
+/**
+ * 
+240 x 6min = 1440min = 24hr
+04.50 = 45
+21.3 = 213
+day[0-59] = morning shift dif
+day [211-239] = evening shift dif
+count x 10 => display
+ * 
+ */
+
+function calculateDay(array){
+for(var i = 0; i<array.length-1;i++){
+    if(array[i] < 60 || array[i] > 210){
+        if(regPossible>0){
+        sd++, count++, regPossible--;
+    }else{
+        sdot++, countOt++;
+        }
+    }else if (regPossible>0){
+        count++, regPossible--;
+    }else if(regPossible<=0){
+        countOt++;
+    }
+        
+}
+console.log("count: " + count + " countOt: " + countOt + " sd: " + sd.toFixed(1) + " sdot: " + sdot.toFixed(1));
+}
+
+
+function createDayShift(){
+    if (startTime > endTime) {
+        castAlert();
+    } else {
+        totalHours = (endTime - startTime);
+    }
+    return createShiftArray(startTime, endTime);
+}
+
+function createNightShift(){
+    return createNightShiftArray(mornEnd, evenStart);
+}
+
+function createNightShiftArray(){
+    var time = [];
+    for(var i = 0; i <= morn; i++){
+        time.push(i.toFixed(1));
+    }
+    for(var i = even; i < 240; i++){
+        time.push(i.toFixed(1));
+    }
+    return time;
+
+}
+
+function createShiftArray(start, end){
+    var time = [];
+    for (var i = start; i <= end; i++) {
+        time.push(i);
+    }
+    return time;
+}
+
+function castAlert(){
+    $('#alert-text').text('Your shift cannot end before it starts. Did you mean Night Shift?');
+        document.getElementById("alert").style.display = "block";
+        document.getElementById("closebtn").style.display = "block";
+}
+
+function createDay(){
+    var day = [];
+    for (var i = 0; i<240; i+=1){
+        day.push(i);
+    }
+    return day;
+}
+
+
+/***
+ * 
+ * document.getElementById("overtime-hour").value = overTimeHr;
     document.getElementById("reg-hr").value = regHr;
-    document.getElementById("reg-hr-pm").value = "N/A"; //friday
+    document.getElementById("reg-hr-pm").value = ":^)"; //friday
     document.getElementById("shift-dif-ot").value = shiftDifHrOT;
     document.getElementById("shift-dif-reg").value = shiftDifHr;
     document.getElementById("shift-dif-reg-pm").value = 0; //friday
     
-});
-//Toggle help tesk for day/night shifts -----
-$(function () {
-    $("[id=toggler-night]").click(function () {
-        $('#time-label-start').text('Time your earlier shift ended:');
-        $('#time-label-end').text('Time your later shift started::');
-        $('#time-help-text').show();
-
-    });
-    $("[id=toggler-day]").click(function () {
-        $('#time-label-start').text('Start:');
-        $('#time-label-end').text('End:');
-        $('#time-help-text').hide();
-
-    });
-});
-
-
-
-
-
-function calculateHours() {
-    regHr = (data[3].value === "night") ? nightShift() : dayShift();
-    if ((regHr + prevHr - 0.5) > 40.0) {
-        overTime();
-        calcShiftDif();
-    } else {
-        regularTime(); // only regular time
-        calcShiftDif();
-    }
-}
-
-function subLunch() {
-    if (lunch = 0) {
-        regHr -= 0.5;
-        console.log("subtracted from reg")
-    } else {
-        if(regHr >= 0.5){
-        regHr -= 0.5;
-        }else{
-            overTimeHr -= 0.5;
-        }
-
-        if(shiftDifHr >=0.5){
-        shiftDifHr -= 0.5;
-        }else{
-            shiftDifHrOT -=0.5;
-        }
-        console.log("subtracted from shiftdif")
-    }
-    console.log("didnt do shit");
-}
-
-function nightShift() {
-    endHr = data[4].value;
-    endMin = data[5].value / 60;
-    startHr = data[6].value;
-    startMin = data[7].value / 60;
-    morningHour = (endHr + endMin);
-    eveningHour = 24 - (startHr + startMin);
-
-    totalHours = (morningHour + eveningHour);
-    return totalHours;
-}
-
-function dayShift() {
-    startHr = data[4].value;
-    endHr = data[6].value;
-    startMin = data[5].value / 60;
-    endMin = data[7].value / 60;
-    startTime = startHr + startMin;
-    endTime = endHr + endMin;
-    if (startHr > endHr) {
-        $('#alert-text').text('Your shift cannot end before it starts. Did you mean Night Shift?');
-        document.getElementById("alert").style.display = "block";
-        document.getElementById("closebtn").style.display = "block";
-    } else {
-        totalHours = (endTime - startTime);
-        return totalHours;
-    }
-}
-
-function isFriday() {
-
-}
-
-function overTime() {
-
-    if (prevHr < 40) {
-        regHr = (40 - prevHr);
-        console.log(regHr + " regular hours")
-        overTimeHr = totalHours - regHr;
-        console.log(overTimeHr + " overtime hours");
-    } else {
-        overTimeHr = totalHours;
-        regHr = 0;
-        console.log(overTimeHr + " only overtime");
-    }
-}
-
-function calcShiftDif() {
-    if (day === 0) {
-        if (startTime > 6.0 && endTime < 21.0) {
-            shiftDifHr = 0;
-        }
-        else if (startTime < 6.0 && endTime < 21.0) {
-            shiftDifHr = 6 - startTime;
-        }
-        else if (startTime > 6.0 && endTime > 21.0) {
-            shiftDifHr = endTime - 21;
-        }
-        else if (startTime < 6 && endTime > 21) {
-            shiftDifHr = (6 - startTime) + (endtime - 21);
-        }
-        else {
-            console.log("by no means should you be seeing this");
-        }
-        console.log(shiftDifHr + " hours to shift dif");
-
-
-    } else if (day === 1) {
-        var morningShiftDif;
-        var eveningShiftDif;
-
-        //check mornings
-        if (morningHour >= 6.0) {
-            morningShiftDif = 6;
-        } else if (morningHour < 6.0) {
-            morningShiftDif = morningHour;
-        } else {
-            morningShiftDif = 0;
-        }
-        //check evening
-        if ((24 - eveningHour) < 21.0) {
-            eveningShiftDif = 3.0;
-        } else if ((24 - eveningHour) >= 21) {
-            eveningShiftDif = eveningHour;
-        }
-
-        shiftDifHr = eveningShiftDif + morningShiftDif;
-    }
-
-    if(prevHr >= 40){
-        shiftDifHrOT = shiftDifHr;
-        shiftDifHr = 0;
-    }else if((prevHr + shiftDifHr) > 40){
-        shiftDifHr = (40 - prevHr);
-        shiftDifHrOT = ((prevHr + shiftDifHr) - 40);
-    }
-    
-}
-
-function regularTime(b) {
-    overTimeHr = 0;
-    regHr = totalHours;
-}
-
-
-function inRange(x, min, max) {
-    return ((x - min) * (x - max) <= 0);
-}
+ */
