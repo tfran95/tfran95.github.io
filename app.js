@@ -1,18 +1,16 @@
-var startTime = 45; //input
-var endTime = 100; //input
-var mornEnd = 52; //input
-var evenStart = 162; //input
+var startTime = 0; //input
+var endTime = 0; //input
+var mornEnd = 0; //input
+var evenStart = 0; //input
 const day = createDay();
 var sd = 0;
 var sdot = 0;
-var reg = 0;
-var ot = 0;
-var prevHr; //input 
+var prevHr = 0; //input 
 var count = 0;
 var countOt = 0;
 
 //40 - totalhours = possible regular hours 
-var regPossible = 150;
+var regPossible;
 
 $('#timesheet-form').submit(function (event) {
     var dataArray = $(this).serializeArray(),
@@ -33,8 +31,11 @@ $('#timesheet-form').submit(function (event) {
     })
     //prevent page refresh on submit
     event.preventDefault();
-    (data[2].value === "night") ? calculateDay(createDayShift) : calculateDay(createNightShift);
+    convertTime();
+    (data[3].value === "night") ? calculateDay(createNightShift) : calculateDay(createDayShift);
+    prevHr = data[1].value;
     return data;
+
 });
 
 /**
@@ -77,15 +78,15 @@ function createDayShift(){
 }
 
 function createNightShift(){
-    return createNightShiftArray(mornEnd, evenStart);
+    return createNightShiftArray(startTime, endTime);
 }
 
 function createNightShiftArray(){
     var time = [];
-    for(var i = 0; i <= morn; i++){
+    for(var i = 0; i <= startTime; i++){
         time.push(i.toFixed(1));
     }
-    for(var i = even; i < 240; i++){
+    for(var i = endTime; i < 240; i++){
         time.push(i.toFixed(1));
     }
     return time;
@@ -113,6 +114,30 @@ function createDay(){
     }
     return day;
 }
+
+function convertTime(){
+        startTime = (data[4].value + (data[5].value / 60).toFixed(1))*10;
+        endTime = (data[6].value + (data[7].value / 60).toFixed(1))*10;
+
+        if(data[3].value === "day"){
+            regPossble = 40 - (endTime - startTime);
+        }else if(data[3].value === "night"){
+            regPossible = 40 ((24 - endTime) + startTime);
+        }
+
+}
+
+/**
+ * 
+ * 0: {name: "day", value: "sat"}
+1: {name: "prev-hr", value: 12}
+2: {name: "lunch-toggler", value: 0}
+3: {name: "shift-toggler", value: "day"}
+4: {name: "startTimeHr", value: 6}
+5: {name: "startTimeMin", value: 0}
+6: {name: "endTimeHr", value: 18}
+7: {name: "endTimeMin", value: 0}
+ */
 
 
 /***
