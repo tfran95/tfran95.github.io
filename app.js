@@ -1,14 +1,27 @@
+/**
+ * 
+ * 
+ * 
+ * id="dropdown" day dropdown
+ * id="prev-hour" previous hours
+ * look up lunch because it's confusing
+ * look up day/night
+ * #startTimeHr #startTimeMin #endTimeHr #endTimeMin
+ * submit
+ */
 
+var day = document.getElementById("dropdown");
+var prevHr = document.getElementById("prev-hour");
+var startTimeHr = document.getElementById("startTimeHr");
+var startTimeMin = document.getElementById("startTimeMin");
+var endTimeHr = document.getElementById("endTimeHr");
+var endTimeMin = document.getElementById("endTimeMin");
+var lunch = document.getElementById("");
+var nightDayShift = 0;
 
-
-var startTime = 0; //input
-var endTime = 0; //input
-var mornEnd = 0; //input
-var evenStart = 0; //input
-var regPossible;
+var startTime, endTime, mornEnd, evenStart, regPossible;
 var sd = 0;
 var sdot = 0;
-var prevHr = 0; //input 
 var count = 0;
 var countOt = 0;
 var totalHours;
@@ -25,6 +38,11 @@ day [211-239] = evening shift dif
 count x 10 => display
  * 
  */
+
+ function yeet(){
+    convertTime();
+
+ }
 
 function calculateDay(array){
 for(var i = 0; i<array.length-1;i++){
@@ -55,7 +73,7 @@ function createDayShift(x){
 }
 
 function createNightShift(x){
-    return createNightShiftArray(startTime, endTime);
+    return createNightShiftArray();
 }
 
 function createNightShiftArray(){
@@ -91,7 +109,7 @@ function createDay(){
     return day;
 }
 
-function convertTime(x){
+function convertTime(){
         startTime = (data[4].value + (data[5].value / 60).toFixed(1))*10;
         endTime = (data[6].value + (data[7].value / 60).toFixed(1))*10;
 
@@ -130,7 +148,7 @@ $('#timesheet-form').submit(function (event) {
 });
 
 /**
- * 
+ * useless nonesense
  * 0: {name: "day", value: "sat"}
 1: {name: "prev-hr", value: 12}
 2: {name: "lunch-toggler", value: 0}
@@ -142,7 +160,7 @@ $('#timesheet-form').submit(function (event) {
  */
 
 /***
- * 
+ * input times to mock timesheet
  * document.getElementById("overtime-hour").value = overTimeHr;
     document.getElementById("reg-hr").value = regHr;
     document.getElementById("reg-hr-pm").value = ":^)"; //friday

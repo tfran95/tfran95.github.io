@@ -21,7 +21,7 @@
 
             </p>
         </header>
-        <form id="timesheet-form" onsubmit="return false">
+        <form id="timesheet-form" onsubmit="yeet()">
 
             <div class="form-group">
                 <p>Shift start day</p>
@@ -38,7 +38,7 @@
             </div>
             <div class="form-group">
                 <p>Current hours <span class="optional">(hours you've already submitted)</span></p>
-                <label><input name="prev-hr" id="ok" type="number" class="prev-hr" min="0" max="144" placeholder="Hours" step=".01"
+                <label><input name="prev-hr" id="prev-hour" type="number" class="prev-hr" min="0" max="144" placeholder="Hours" step=".01"
                     required /></label>
 
                 <div class="form-group" id="lunch">
@@ -63,20 +63,16 @@
                         <p id="time-label-start">Start:</p>
                         <p id="time-help-text"><span class="optional">(Ex: If you got off at 5am, then went back at 5pm, enter 05 00 then 17 00)</span></p>
                         <label>
-                            <input name="startTimeHr" type="number" class="time" min="0" max="23" placeholder="Hour"
-                                required />:<input name="startTimeMin" type="number" class="time" min="0" max="59"
+                            <input name="startTimeHr" id="startTimeHr" type="number" class="time" min="0" max="23" placeholder="Hour"
+                                required />:<input name="startTimeMin" id="startTimeMin"type="number" class="time" min="0" max="59"
                                 placeholder="Min" required /></label>
                         <p id="time-label-end">End:</p>
                         <label>
-
-                            <input name="endTimeHr" type="number" class="time" min="0" max="23" placeholder="Hour"
-                                required />:<input name="endTimeMin" type="number" class="time" min="0" max="59"
+                            <input name="endTimeHr" id="endTimeHr" type="number" class="time" min="0" max="23" placeholder="Hour"
+                                required />:<input name="endTimeMin" id="endTimeMin" type="number" class="time" min="0" max="59"
                                 placeholder="Min" required /></label>
-
                     </div>
-
                 </div>
-
                 <div class="form-group">
                     <div class="alert" id="alert">
                         <span class="closebtn" id="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
