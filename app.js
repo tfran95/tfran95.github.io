@@ -1,43 +1,20 @@
+
+
+
 var startTime = 0; //input
 var endTime = 0; //input
 var mornEnd = 0; //input
 var evenStart = 0; //input
-const day = createDay();
+var regPossible;
 var sd = 0;
 var sdot = 0;
 var prevHr = 0; //input 
 var count = 0;
 var countOt = 0;
+var totalHours;
+var data = [];
 
 //40 - totalhours = possible regular hours 
-var regPossible;
-
-$('#timesheet-form').submit(function (event) {
-    var dataArray = $(this).serializeArray(),
-        dataObj = {};
-
-    $(dataArray).each(function (i, field) {
-        dataObj[field.name] = field.value;
-    });
-    //convert value properties to int
-    data = dataArray.map(function (obj) {
-        var value;
-        //only convert strings of numbers
-        (!isNaN(obj.value)) ? (value = parseFloat(obj.value)) : (value = obj.value);
-        return {
-            name: obj.name,
-            value: value
-        };
-    })
-    //prevent page refresh on submit
-    event.preventDefault();
-    convertTime();
-    (data[3].value === "night") ? calculateDay(createNightShift) : calculateDay(createDayShift);
-    prevHr = data[1].value;
-    return data;
-
-});
-
 /**
  * 
 240 x 6min = 1440min = 24hr
@@ -68,7 +45,7 @@ console.log("count: " + count + " countOt: " + countOt + " sd: " + sd.toFixed(1)
 }
 
 
-function createDayShift(){
+function createDayShift(x){
     if (startTime > endTime) {
         castAlert();
     } else {
@@ -77,7 +54,7 @@ function createDayShift(){
     return createShiftArray(startTime, endTime);
 }
 
-function createNightShift(){
+function createNightShift(x){
     return createNightShiftArray(startTime, endTime);
 }
 
@@ -90,7 +67,6 @@ function createNightShiftArray(){
         time.push(i.toFixed(1));
     }
     return time;
-
 }
 
 function createShiftArray(start, end){
@@ -115,7 +91,7 @@ function createDay(){
     return day;
 }
 
-function convertTime(){
+function convertTime(x){
         startTime = (data[4].value + (data[5].value / 60).toFixed(1))*10;
         endTime = (data[6].value + (data[7].value / 60).toFixed(1))*10;
 
@@ -126,6 +102,32 @@ function convertTime(){
         }
 
 }
+
+$('#timesheet-form').submit(function (event) {
+    var dataArray = $(this).serializeArray(),
+        dataObj = {};
+
+    $(dataArray).each(function (i, field) {
+        dataObj[field.name] = field.value;
+    });
+    //convert value properties to int
+    data = dataArray.map(function (obj) {
+        var value;
+        //only convert strings of numbers
+        (!isNaN(obj.value)) ? (value = parseFloat(obj.value)) : (value = obj.value);
+        return {
+            name: obj.name,
+            value: value
+        };
+    });
+    //prevent page refresh on submit
+    event.preventDefault();
+    convertTime(data);
+    (data[3].value === "night") ? calculateDay(createNightShift(data)) : calculateDay(createDayShift(data));
+    prevHr = data[1].value;
+    return data;
+
+});
 
 /**
  * 
@@ -138,7 +140,6 @@ function convertTime(){
 6: {name: "endTimeHr", value: 18}
 7: {name: "endTimeMin", value: 0}
  */
-
 
 /***
  * 
