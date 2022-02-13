@@ -33,6 +33,11 @@ h1 {
   vertical-align: middle;
 }
 
+a{
+  color: inherit;
+  text-decoration: inherit;
+}
+
 .container {
   width: 100%;
   margin: 3.125rem auto 0 auto;

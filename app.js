@@ -1,4 +1,4 @@
-let speed = 40;
+let speed = 90;
 let scale = 0.7; 
 let canvas;
 let ctx;
@@ -15,6 +15,7 @@ let cat = {
     canvas = document.getElementById("bg");
     ctx = canvas.getContext("2d");
     cat.img.src = 'cat.png';
+    cat.img.onclick='redir()';
 
     canvas.width  = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -50,6 +51,10 @@ function checkHitBox(){
     if(cat.y+cat.img.height*scale >= canvas.height || cat.y <= 0){
         cat.yspeed *= -1;
     }    
+}
+
+function redir(){
+    window.location = "https://www.google.com";
 }
 
 function pickColor(){
