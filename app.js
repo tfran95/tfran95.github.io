@@ -29,9 +29,8 @@ function update() {
         //Draw the canvas background
         ctx.fillStyle = 'white';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        //Draw DVD Logo and his background
+        //Draw cat
         ctx.fillStyle = logoColor;
-        //ctx.fillRect(dvd.x, dvd.y, dvd.img.width*scale, dvd.img.height*scale);
         ctx.drawImage(cat.img, cat.x, cat.y, cat.img.width*scale, cat.img.height*scale);
         //Move the logo
         cat.x+=cat.xspeed;
@@ -60,3 +59,5 @@ function redir(){
 function pickColor(){
     logoColor = 'white';
 }
+
+//animation from https://github.com/AlessioMaddaluno/bouncing-dvd-logo
