@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Timothy Francis</title>
+<meta name="description" content="Operations and data systems. Whitefish, Montana.">
+<link rel="canonical" href="https://timothy-francis.com/">
+<style>
+  :root {
+    --paper:  #edeeea;
+    --ink:    #1f2421;
+    --soft:   #6c7370;
+    --rule:   #d4d7d1;
+    --accent: #2e5266;
+    --serif: Charter, "Iowan Old Style", Georgia, serif;
+    --sans: ui-sans-serif, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:  #15181a;
+      --ink:    #e4e6e2;
+      --soft:   #8f9691;
+      --rule:   #2b3033;
+      --accent: #8fb4cc;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    padding: 7vh 7vw 16vh;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 19px;
+    line-height: 1.7;
+  }
+  .page { max-width: 40rem; margin: 0 auto; }
+
+  /* --- Photo and name lockup --- */
+  .lockup { display: flex; gap: 2rem; align-items: flex-end; margin-bottom: 3rem; }
+  .portrait {
+    flex: 0 0 11rem;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    width: 11rem;
+    background: var(--rule);
+    display: block;
+  }
+  .nameplate { padding-bottom: 0.35rem; }
+  .nameplate h1 {
+    font-family: var(--sans);
+    font-size: clamp(2.1rem, 6vw, 2.9rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin: 0 0 0.6rem;
+  }
+  .nameplate p {
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    line-height: 1.45;
+    color: var(--soft);
+    margin: 0;
+  }
+
+  /* --- Bio --- */
+  .bio p { margin: 0 0 1.15rem; }
+  .bio p:last-child { margin-bottom: 0; }
+  .bio a { color: var(--accent); text-underline-offset: 2px; }
+
+  /* --- Links --- */
+  .elsewhere { margin-top: 3.5rem; border-top: 1px solid var(--rule); }
+  .elsewhere a {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1.5rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--sans);
+    font-size: 1rem;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .elsewhere a:hover { color: var(--accent); }
+  .elsewhere a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .elsewhere .where { color: var(--soft); font-size: 0.85rem; text-align: right; }
+
+  @media (max-width: 44rem) {
+    .lockup { display: block; margin-bottom: 2.25rem; }
+    .portrait { width: 8.5rem; flex: none; margin-bottom: 1.5rem; }
+    .nameplate { padding-bottom: 0; }
+    body { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- PHOTO: save your picture in the repo as photo.jpg. Any shape works —
+       it gets cropped to a tall rectangle automatically. -->
+  <div class="lockup">
+    <img class="portrait" src="photo.jpg" alt="Timothy Francis">
+    <div class="nameplate">
+      <h1>Timothy Francis</h1>
+      <p>Operations and data systems<br>Whitefish, Montana</p>
+    </div>
+  </div>
+
+  <!-- BIO: replace this with your own. Two or three short paragraphs is plenty. -->
+  <div class="bio">
+    <p>I build the systems organizations actually run on — the databases,
+       the automations, the reporting that keeps work from falling through
+       the cracks. Right now I do that at the Forecasting Research Institute.</p>
+
+    <p>Before this I worked in neuroscience research and spent time as an
+       investigator in animal welfare. The through-line is a stubborn interest
+       in measuring things that are hard to measure.</p>
+
+    <p>I live in northwest Montana, where I spend most of my free time running
+       trails, riding bikes, and losing arguments with a hydroponics setup.</p>
+  </div>
+
+  <!-- LINKS: delete any row you don't want. The second span is the small grey
+       label on the right — it can say anything, or be removed. -->
+  <nav class="elsewhere">
+    <a href="cv.pdf"><span>Curriculum vitae</span><span class="where">PDF</span></a>
+    <a href="https://example.com/blog"><span>Writing</span><span class="where">Blog</span></a>
+    <a href="https://github.com/tfran95"><span>GitHub</span><span class="where">tfran95</span></a>
+    <a href="https://linkedin.com/in/yourhandle"><span>LinkedIn</span><span class="where">Profile</span></a>
+    <a href="mailto:you@timothy-francis.com"><span>Email</span><span class="where">you@timothy-francis.com</span></a>
+  </nav>
+
+</div>
+</body>
+</html>
