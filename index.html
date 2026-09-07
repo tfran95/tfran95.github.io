@@ -5,135 +5,115 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Timothy Francis</title>
 <meta name="description" content="Operations and data systems. Whitefish, Montana.">
+<meta name="color-scheme" content="light">
 <link rel="canonical" href="https://timothy-francis.com/">
 <style>
   :root {
-    --paper:  #edeeea;
-    --ink:    #1f2421;
-    --soft:   #6c7370;
-    --rule:   #d4d7d1;
-    --accent: #2e5266;
-    --serif: Charter, "Iowan Old Style", Georgia, serif;
-    --sans: ui-sans-serif, -apple-system, "Helvetica Neue", Arial, sans-serif;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --paper:  #15181a;
-      --ink:    #e4e6e2;
-      --soft:   #8f9691;
-      --rule:   #2b3033;
-      --accent: #8fb4cc;
-    }
+    --paper:  #c9ccc4;   /* single stone tone — no light/dark switching */
+    --ink:    #1b2620;
+    --soft:   #4c5852;
+    --link:         #0000ee;
+    --link-visited: #551a8b;
+    --sans: ui-sans-serif, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   }
 
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
   body {
     margin: 0;
-    padding: 7vh 7vw 16vh;
+    padding: 8vh 6vw;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: var(--paper);
     color: var(--ink);
-    font-family: var(--serif);
-    font-size: 19px;
-    line-height: 1.7;
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.55;
   }
-  .page { max-width: 40rem; margin: 0 auto; }
 
-  /* --- Photo and name lockup --- */
-  .lockup { display: flex; gap: 2rem; align-items: flex-end; margin-bottom: 3rem; }
+  .layout {
+    display: grid;
+    grid-template-columns: 19rem 1fr;
+    column-gap: 3.5rem;
+    max-width: 50rem;
+    width: 100%;
+  }
+
   .portrait {
-    flex: 0 0 11rem;
-    aspect-ratio: 4 / 5;
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+    aspect-ratio: 8 / 9;
     object-fit: cover;
-    width: 11rem;
-    background: var(--rule);
     display: block;
-  }
-  .nameplate { padding-bottom: 0.35rem; }
-  .nameplate h1 {
-    font-family: var(--sans);
-    font-size: clamp(2.1rem, 6vw, 2.9rem);
-    font-weight: 600;
-    letter-spacing: -0.03em;
-    line-height: 1.05;
-    margin: 0 0 0.6rem;
-  }
-  .nameplate p {
-    font-family: var(--sans);
-    font-size: 0.95rem;
-    line-height: 1.45;
-    color: var(--soft);
-    margin: 0;
+    background: rgba(0, 0, 0, 0.08);
   }
 
-  /* --- Bio --- */
-  .bio p { margin: 0 0 1.15rem; }
-  .bio p:last-child { margin-bottom: 0; }
-  .bio a { color: var(--accent); text-underline-offset: 2px; }
+  .intro { grid-column: 2; grid-row: 1; }
 
-  /* --- Links --- */
-  .elsewhere { margin-top: 3.5rem; border-top: 1px solid var(--rule); }
-  .elsewhere a {
+  h1 {
+    font-size: clamp(2.3rem, 5.5vw, 3.3rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin: -0.12em 0 1.6rem;
+  }
+
+  .intro p { margin: 0 0 1rem; max-width: 26rem; }
+  .intro p:last-child { margin-bottom: 0; }
+  .intro a { color: var(--ink); text-underline-offset: 2px; }
+
+  .links {
+    grid-column: 2;
+    grid-row: 2;
+    margin-top: 3.5rem;
     display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 1.5rem;
-    padding: 0.85rem 0;
-    border-bottom: 1px solid var(--rule);
-    font-family: var(--sans);
-    font-size: 1rem;
-    color: var(--ink);
-    text-decoration: none;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
   }
-  .elsewhere a:hover { color: var(--accent); }
-  .elsewhere a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-  .elsewhere .where { color: var(--soft); font-size: 0.85rem; text-align: right; }
+  .links a { color: var(--link); }
+  .links a:visited { color: var(--link-visited); }
+  .links a:focus-visible { outline: 2px solid var(--link); outline-offset: 3px; }
 
-  @media (max-width: 44rem) {
-    .lockup { display: block; margin-bottom: 2.25rem; }
-    .portrait { width: 8.5rem; flex: none; margin-bottom: 1.5rem; }
-    .nameplate { padding-bottom: 0; }
-    body { font-size: 18px; }
+  @media (max-width: 46rem) {
+    body { display: block; padding: 7vh 8vw 14vh; }
+    .layout { display: block; max-width: 30rem; margin: 0 auto; }
+    .portrait { max-width: 15rem; margin-bottom: 2rem; }
+    h1 { margin-bottom: 1.25rem; }
+    .links { margin-top: 2.75rem; }
   }
 </style>
 </head>
 <body>
-<div class="page">
 
-  <!-- PHOTO: save your picture in the repo as photo.jpg. Any shape works —
-       it gets cropped to a tall rectangle automatically. -->
-  <div class="lockup">
+  <div class="layout">
+
+    <!-- PHOTO: save your picture in the repo as photo.jpg. Any dimensions work;
+         it gets cropped to this box automatically. -->
     <img class="portrait" src="photo.jpg" alt="Timothy Francis">
-    <div class="nameplate">
+
+    <div class="intro">
       <h1>Timothy Francis</h1>
-      <p>Operations and data systems<br>Whitefish, Montana</p>
+
+      <!-- BIO: replace with your own. Two short paragraphs is about right. -->
+      <p>Current: Ops guy at Forecasting Research Institute.</p>
+
+      <p>Former: undercover investigator on factory farms and wildland firefighter.</p>
     </div>
+
+    <!-- LINKS: add or delete rows freely. -->
+    <nav class="links">
+      <a href="cv.pdf">cv</a>
+      <a href="about.html">about</a>
+      <a href="https://example.com/blog">blog</a>
+      <a href="photos.html">photos</a>
+      <a href="mailto:you@timothy-francis.com">email</a>
+    </nav>
+
   </div>
 
-  <!-- BIO: replace this with your own. Two or three short paragraphs is plenty. -->
-  <div class="bio">
-    <p>I build the systems organizations actually run on — the databases,
-       the automations, the reporting that keeps work from falling through
-       the cracks. Right now I do that at the Forecasting Research Institute.</p>
-
-    <p>Before this I worked in neuroscience research and spent time as an
-       investigator in animal welfare. The through-line is a stubborn interest
-       in measuring things that are hard to measure.</p>
-
-    <p>I live in northwest Montana, where I spend most of my free time running
-       trails, riding bikes, and losing arguments with a hydroponics setup.</p>
-  </div>
-
-  <!-- LINKS: delete any row you don't want. The second span is the small grey
-       label on the right — it can say anything, or be removed. -->
-  <nav class="elsewhere">
-    <a href="cv.pdf"><span>Curriculum vitae</span><span class="where">PDF</span></a>
-    <a href="https://example.com/blog"><span>Writing</span><span class="where">Blog</span></a>
-    <a href="https://github.com/tfran95"><span>GitHub</span><span class="where">tfran95</span></a>
-    <a href="https://linkedin.com/in/yourhandle"><span>LinkedIn</span><span class="where">Profile</span></a>
-    <a href="mailto:you@timothy-francis.com"><span>Email</span><span class="where">you@timothy-francis.com</span></a>
-  </nav>
-
-</div>
 </body>
 </html>
